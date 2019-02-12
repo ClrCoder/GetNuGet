@@ -1,0 +1,2 @@
+# ClrSeed
+.Net project template
