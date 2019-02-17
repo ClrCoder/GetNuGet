@@ -5,7 +5,7 @@
 
 strategy:
   matrix:
-    linux: 
+    linux:
       imageName: 'Ubuntu-16.04'
     windows:
       imageName: 'vs2017-win2016'
