@@ -4,7 +4,7 @@
 Push-Location $PSScriptRoot/build
 
 try {
-    powershell/fast-npm-update.ps1
+    ../scripts/fast-npm-update.ps1
 
     npm run eclint-check
 }
