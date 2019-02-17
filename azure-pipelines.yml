@@ -3,15 +3,27 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+strategy:
+  matrix:
+    linux: 
+      imageName: 'Ubuntu-16.04'
+    windows:
+      imageName: 'vs2017-win2016'
+
 trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-18.04'
+  vmImage: $(imageName)
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: NodeTool@0
+
+- script: |
+    cd build
+    npm install
+    npm run eclint_check
+  displayName: "eclint checks"
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
