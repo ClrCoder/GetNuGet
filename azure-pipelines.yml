@@ -22,10 +22,13 @@ steps:
     versionSpec: ">=10.0"
 
 - script: |
-    cd build
+    cd scripts
     npm install
-    npm run eclint-check
-  displayName: "eclint checks"
+  displayName: "Installing node.js dependencies for scripts"
+
+- powershell: |
+    ./build/ci/rules-check.ps1
+  displayName: "Checking repository rules"
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
