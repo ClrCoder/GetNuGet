@@ -9,7 +9,8 @@ $wrongSlnFiles = @()
 
 foreach ($slnFile in &"$PSScriptRoot/config/sln-files.ps1"){
     $anyCpuConfigFound = $false;
-    foreach ($configuration in &"$scriptsRoot/get-sln-configurations.ps1" $slnFile){
+    $slnFilePath = Join-Path $repoRoot $slnFile
+    foreach ($configuration in &"$scriptsRoot/get-sln-configurations.ps1" $slnFilePath){
         if ($configuration.Split("|")[1] -eq "Any CPU"){
             $anyCpuConfigFound = $true;
             break;
