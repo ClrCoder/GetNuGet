@@ -10,9 +10,9 @@ $scriptsRoot = "$repoRoot/scripts"
 
 foreach ($slnFile in &"$PSScriptRoot/config/sln-files.ps1") {
     if ($Fix){
-        &"$scriptsRoot/sln-vsversion.ps1" -Fix $slnFile
+        &"$scriptsRoot/sln-vsversion.ps1" -Fix (Join-Path $repoRoot $slnFile)
     }
     else{
-        &"$scriptsRoot/sln-vsversion.ps1" -Check $slnFile
+        &"$scriptsRoot/sln-vsversion.ps1" -Check (Join-Path $repoRoot $slnFile)
     }
 }
