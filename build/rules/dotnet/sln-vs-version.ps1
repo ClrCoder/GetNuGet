@@ -8,11 +8,16 @@ $repoRoot = Resolve-Path "$PSScriptRoot/../../.."
 $scriptsRoot = "$repoRoot/scripts"
 # ---------------------------------------------------------------------
 
-foreach ($slnFile in &"$PSScriptRoot/config/sln-files.ps1") {
-    if ($Fix){
-        &"$scriptsRoot/sln-vsversion.ps1" -Fix (Join-Path $repoRoot $slnFile)
+try{
+    foreach ($slnFile in &"$PSScriptRoot/config/sln-files.ps1") {
+        if ($Fix){
+            &"$scriptsRoot/sln-vsversion.ps1" -Fix (Join-Path $repoRoot $slnFile)
+        }
+        else{
+            &"$scriptsRoot/sln-vsversion.ps1" -Check (Join-Path $repoRoot $slnFile)
+        }
     }
-    else{
-        &"$scriptsRoot/sln-vsversion.ps1" -Check (Join-Path $repoRoot $slnFile)
-    }
+}
+catch{
+    throw
 }

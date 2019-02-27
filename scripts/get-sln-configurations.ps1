@@ -4,21 +4,26 @@ param(
     [parameter(Mandatory=$true, Position = 0)][string]$slnFilePath
 )
 
-$configSectionStarted = $false
-$result = @();
-foreach ($line in Get-Content $slnFilePath) {
-    if ($configSectionStarted) {
-        if ($line.Trim().StartsWith("EndGlobalSection")) {
-            break;
-        }
+try{
+    $configSectionStarted = $false
+    $result = @();
+    foreach ($line in Get-Content $slnFilePath) {
+        if ($configSectionStarted) {
+            if ($line.Trim().StartsWith("EndGlobalSection")) {
+                break;
+            }
 
-        $result += $line.Split("=")[0].Trim()
-    }
-    else {
-        if ($line.Trim().StartsWith("GlobalSection(SolutionConfigurationPlatforms)")) {
-            $configSectionStarted = $true;
+            $result += $line.Split("=")[0].Trim()
+        }
+        else {
+            if ($line.Trim().StartsWith("GlobalSection(SolutionConfigurationPlatforms)")) {
+                $configSectionStarted = $true;
+            }
         }
     }
+
+    return $result
 }
-
-return $result
+catch{
+    throw;
+}
