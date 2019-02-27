@@ -5,4 +5,9 @@ $repoRoot = Resolve-Path "$PSScriptRoot/../../../.."
 $scriptsRoot = "$repoRoot/scripts"
 # ---------------------------------------------------------------------
 
-&"$scriptsRoot/repo-search.ps1" "**/*.sln" -NoDir
+try{
+    &"$scriptsRoot/repo-search.ps1" "**/*.sln" -NoDir
+}
+catch{
+    throw;
+}
