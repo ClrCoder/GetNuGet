@@ -6,12 +6,24 @@ MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB7DD641-E741-4FC9-8307-DF8168F9DB04}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Analyzers.ruleset = Analyzers.ruleset
+		azure-pipelines.yml = azure-pipelines.yml
+		Directory.Build.Props = Directory.Build.Props
+		stylecop.json = stylecop.json
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClrSeed", "src\ClrSeed\ClrSeed.csproj", "{063B32E0-C402-4E97-B47C-46F6D5B087C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{063B32E0-C402-4E97-B47C-46F6D5B087C2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{063B32E0-C402-4E97-B47C-46F6D5B087C2}.Debug|x64.Build.0 = Debug|Any CPU
+		{063B32E0-C402-4E97-B47C-46F6D5B087C2}.Release|x64.ActiveCfg = Release|Any CPU
+		{063B32E0-C402-4E97-B47C-46F6D5B087C2}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
