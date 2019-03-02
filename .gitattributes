@@ -3,6 +3,9 @@
 ###############################################################################
 * text=auto
 
+# Resharper team-shared configuration
+*.DotSettings eol=lf
+
 ###############################################################################
 # Make sh files under the build directory always have LF as line endings
 ###############################################################################
