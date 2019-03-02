@@ -89,6 +89,7 @@ function run_eclint(mode: "check" | "fix") {
   var baseProcessing = gulp.src(
     ["**"].concat(repo_ignore)
     , {
+      read: false,
       removeBOM: false,
       dot: true
     })
@@ -97,7 +98,11 @@ function run_eclint(mode: "check" | "fix") {
         let relative_path = file.path.substr(repoRoot.length + 1, file.path.length - repoRoot.length - 1);
         relative_path = relative_path.replace(/\\/g, "/");
         if (relative_path != '' && repo_files.has(relative_path)) {
-          done(null, file);
+          // Read out only non-ignored files
+          fs.readFile(file.path, (err, data) => {
+            file.contents = data;
+            done(err, file);
+          })
         }
         else {
           done(null, null);
