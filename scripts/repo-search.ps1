@@ -1,6 +1,8 @@
 param(
     [parameter(Mandatory = $true, Position = 0)][string[]]$Path,
-    [switch]$NoDir
+    [switch]$NoDir,
+    [switch]$IncludeIgnored,
+    [string]$Status
 )
 
 try {
@@ -26,6 +28,11 @@ try {
 
     if ($NoDir) {
         $arguments += '--nodir'
+    }
+
+    if ($Status) {
+        $arguments += "--status"
+        $arguments += $Status
     }
 
     foreach ($p in $Path) {

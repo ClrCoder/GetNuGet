@@ -22,35 +22,127 @@ function createPluginError(err: Error | string, options?: PluginError.Options): 
   return new PluginError(PLUGIN_NAME, err, options);
 }
 
-function get_all_git_repo_files(path: string): Set<string> {
-  let command = `git -c core.quotePath=false -C "${path}" ls-files -o -c -m  --exclude-standard`;
-  var result = shelljs.exec(command,
-    {
-      env: { "LC_LOCAL": "C.UTF-8" },
-      silent: true, encoding: 'utf8'
-    });
+function get_all_git_repo_files(path: string, status: string): Set<string> {
+  // OMG GIT!!!
+  // Where is your clean CLI after 10+ years?
 
-  let exitCode = (<any>result).code;
-  if (exitCode != 0) {
-    console.log(result.stderr);
-    console.log("Error executing command: ", command);
-    console.log("Exit code: ", exitCode);
-    throw "Error executing 'git ls-files'";
+  let optionsString = "";
+
+  if (status.includes("c")) {
+    optionsString += "-c ";
   }
 
-  var filesSet = new Set<string>();
-  for (let relativeFilePath of (<string>result.stdout).split("\n")) {
-    if (relativeFilePath != '') {
-      filesSet.add(relativeFilePath)
+  if (status.includes("m")) {
+    optionsString += "-m ";
+  }
+
+  if (status.includes("?")) {
+    optionsString += "-o ";
+  }
+
+  let filesSet = new Set<string>();
+
+  if (status.includes("!")){
+    let ignoredCommand = `git -c core.quotePath=false -C "${path}" ls-files -o -i --exclude-standard`;
+    let ignoredResult = shelljs.exec(ignoredCommand,
+      {
+        env: { "LC_LOCAL": "C.UTF-8" },
+        silent: true, encoding: 'utf8'
+      });
+
+    let exitCode = (<any>ignoredResult).code;
+    if (exitCode != 0) {
+      console.log(ignoredResult.stderr);
+      console.log("Error executing command: ", ignoredCommand);
+      console.log("Exit code: ", exitCode);
+      throw "Error executing 'git ls-files'";
+    }
+
+    for (let relativeFilePath of (<string>ignoredResult.stdout).split("\n")) {
+      if (relativeFilePath != '') {
+        filesSet.add(relativeFilePath)
+      }
+    }
+  }
+
+  if (optionsString != "") {
+    let command = `git -c core.quotePath=false -C "${path}" ls-files ${optionsString}--exclude-standard`;
+    let result = shelljs.exec(command,
+      {
+        env: { "LC_LOCAL": "C.UTF-8" },
+        silent: true, encoding: 'utf8'
+      });
+
+    let exitCode = (<any>result).code;
+    if (exitCode != 0) {
+      console.log(result.stderr);
+      console.log("Error executing command: ", command);
+      console.log("Exit code: ", exitCode);
+      throw "Error executing 'git ls-files'";
+    }
+
+    for (let relativeFilePath of (<string>result.stdout).split("\n")) {
+      if (relativeFilePath != '') {
+        filesSet.add(relativeFilePath)
+      }
+    }
+  }
+
+
+  if ((status.includes("a") && !status.includes("c"))
+    || (!status.includes("a") && status.includes("c"))) {
+
+    let diffCommand = `git -C "${path}" diff --name-only --diff-filter=A HEAD`;
+    let diffResult = shelljs.exec(diffCommand,
+      {
+        env: { "LC_LOCAL": "C.UTF-8" },
+        silent: true, encoding: 'utf8'
+      });
+
+    let exitCode = (<any>diffResult).code;
+    if (exitCode != 0) {
+      console.log(diffResult.stderr);
+      console.log("Error executing command: ", diffCommand);
+      console.log("Exit code: ", exitCode);
+      throw "Error executing 'git diff'";
+    }
+
+    let doInclude = status.includes("a");
+    for (let relativeFilePath of (<string>diffResult.stdout).split("\n")) {
+      if (relativeFilePath != '') {
+        if (doInclude) {
+          filesSet.add(relativeFilePath);
+        }
+        else {
+          filesSet.delete(relativeFilePath);
+        }
+      }
     }
   }
 
   return filesSet;
 }
 
-function get_all_hg_repo_files(path: string): Set<string> {
+function get_all_hg_repo_files(path: string, status: string): Set<string> {
 
-  let command = `hg status -m -a -c -u -n --encoding utf8 --cwd "${path}"`
+
+  let optionsString = "";
+  if (status.includes("a")) {
+    optionsString += "-a ";
+  }
+  if (status.includes("m")) {
+    optionsString += "-m ";
+  }
+  if (status.includes("c")) {
+    optionsString += "-c ";
+  }
+  if (status.includes("?")) {
+    optionsString += "-u ";
+  }
+  if (status.includes("!")){
+    optionsString += "-i ";
+  }
+  let command = `hg status ${optionsString}-n --encoding utf8 --cwd "${path}"`
 
   var result = shelljs.exec(command, { silent: true, encoding: 'utf8' });
 
@@ -72,18 +164,18 @@ function get_all_hg_repo_files(path: string): Set<string> {
   return filesSet;
 }
 
-function get_repo_files(repo_root: string): Set<string> {
+function get_repo_files(repo_root: string, status: string): Set<string> {
   if (fs.existsSync(path.join(repo_root, ".git"))) {
-    return get_all_git_repo_files(repo_root);
+    return get_all_git_repo_files(repo_root, status);
   } else {
-    return get_all_hg_repo_files(repo_root);
+    return get_all_hg_repo_files(repo_root, status);
   }
 }
 
 function run_eclint(mode: "check" | "fix") {
   var repoRoot = path.dirname(find_up.sync([".git", ".hg"], { cwd: __dirname }));
 
-  let repo_files = get_repo_files(repoRoot);
+  let repo_files = get_repo_files(repoRoot, "amc?");
 
   process.chdir(repoRoot);
   var baseProcessing = gulp.src(
@@ -196,13 +288,21 @@ type Done = (err?: Error, file?: VinylFile) => void;
 
 gulp.task("repo-search", function () {
   let repoRoot = path.dirname(find_up.sync([".git", ".hg"], { cwd: __dirname }));
+  //let repoRoot = path.dirname(find_up.sync([".git", ".hg"], { cwd: "c:\\ClrCoder\\ClrSeed\\git1" }));
 
-  let repo_files = get_repo_files(repoRoot);
+  let status = <string>yargs.argv["status"];
+  if (!status) {
+    status = "amc?"
+  }
+
+  let outputAll = status.includes("a") && status.includes("m") && status.includes("c")
+    && status.includes("?") && status.includes("!");
+
+  let repo_files = outputAll ? new Set<string>() : get_repo_files(repoRoot, status);
 
   let srcArgs = yargs.argv["src"];
   let src: Array<string>;
 
-  //get_all_hg_repo_files(repoRoot);
   if (!srcArgs) {
     src = ["**"];
   }
@@ -225,7 +325,7 @@ gulp.task("repo-search", function () {
       through.obj((file: VinylFile, _enc: string, done: Done) => {
         let relative_path = file.path.substr(repoRoot.length + 1, file.path.length - repoRoot.length - 1);
         relative_path = relative_path.replace(/\\/g, "/");
-        if (relative_path != '' && repo_files.has(relative_path)) {
+        if (relative_path != '' && (outputAll || repo_files.has(relative_path))) {
           console.log(relative_path);
         }
         done(null, file)
