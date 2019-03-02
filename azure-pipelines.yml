@@ -20,6 +20,9 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: ">=10.0"
+- powershell: |
+    ./build/environment-check.ps1
+  displayName: "Build environment check"
 
 - script: |
     cd scripts

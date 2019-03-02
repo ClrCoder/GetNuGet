@@ -10,6 +10,9 @@ $rulesRoot = "$repoRoot/build/rules"
 # ---------------------------------------------------------------------
 
 try{
+    # Checking environment
+    &"$repoRoot/build/environment-check.ps1"
+
     if ($ForceFix){
         $fixMode = $true
     }else{
