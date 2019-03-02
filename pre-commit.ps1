@@ -8,7 +8,7 @@ $rulesRoot = "$repoRoot/build/rules"
 try{
     Write-Host
     Write-Host "Checking and applying '*.sln' files rules" -ForegroundColor Green
-    &"$rulesRoot/dotnet/sln-no-anycpu-configurations.ps1"
+    &"$rulesRoot/dotnet/sln-no-anycpu-configurations.ps1" -Fix
     &"$rulesRoot/dotnet/sln-vs-version.ps1" -Fix
 
     Write-Host
