@@ -30,6 +30,7 @@ Internal and Semantic.
     - Visual Studio >= 2017
 *   Seed dotnet solution
     - ClrSeed.sln - solution file
+    - `build/build.ps1` - script for full solution build with modes: 'Dev', 'CI', 'PrePush'
     - Sample .Net Standard 2.0 project with one C# file that comply with all conventions
     - StyleCop Analyzers tool (through Directory.Build.props)
     - R# Team-Shared configuration

@@ -49,12 +49,22 @@ try{
         Write-Host "-----------------------------------------------------------------" -ForegroundColor Yellow
         Write-Host "     You have uncommited changes in your working directory."       -ForegroundColor Yellow
         Write-Host "-----------------------------------------------------------------" -ForegroundColor Yellow
+        return
     }
-    else {
-        Write-Host "=================================================================" -ForegroundColor Green
-        Write-Host "            Congratulation! You are ready to PUSH!"                -ForegroundColor Green
-        Write-Host "=================================================================" -ForegroundColor Green
-    }
+
+    # Budling Release
+    Write-Host
+    &"$repoRoot/build/build.ps1" -Mode PrePush -Configuration Release -Platform x64
+    # TODO: Put here assemble of final artifacts (that can depends on multiple )
+
+    # Building in Debug
+    Write-Host
+    &"$repoRoot/build/build.ps1" -Mode PrePush -Configuration Debug -Platform x64
+
+    Write-Host
+    Write-Host "=================================================================" -ForegroundColor Green
+    Write-Host "            Congratulation! You are ready to PUSH!"                -ForegroundColor Green
+    Write-Host "=================================================================" -ForegroundColor Green
 }
 catch{
     throw

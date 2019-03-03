@@ -5,10 +5,24 @@
 
 strategy:
   matrix:
-    linux:
+    linux-rules:
       imageName: 'Ubuntu-16.04'
-    windows:
+      mode: 'Rules'
+    windows-rules:
       imageName: 'vs2017-win2016'
+      mode: 'Rules'
+    linux-x64-release:
+      imageName: 'Ubuntu-16.04'
+      mode: 'Release'
+    windows-x64-release:
+      imageName: 'vs2017-win2016'
+      mode: 'Release'
+    linux-x64-debug:
+      imageName: 'Ubuntu-16.04'
+      mode: 'Debug'
+    windows-x64-deubg:
+      imageName: 'vs2017-win2016'
+      mode: 'Debug'
 
 trigger:
 - master
@@ -31,9 +45,11 @@ steps:
 
 - powershell: |
     ./build/ci/rules-check.ps1
+  condition: eq( variables.mode, 'Rules')
   displayName: "Checking repository rules"
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    dotnet msbuild -restore /t:rebuild /p:Configuration=$(mode) /p:Platform=x64 /warnaserror
+  condition: ne( variables.mode, 'Rules')
+  displayName: "Build solution"
+
