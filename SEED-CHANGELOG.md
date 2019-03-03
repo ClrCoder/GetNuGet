@@ -7,7 +7,7 @@ Due to big amount of breaking changes in each release, this project uses two ver
 Internal and Semantic.
  Semantic Version
 | Internal Version | Semantic Version |
-| ---------------- | ---------------- |
+|:----------------:|:----------------:|
 | 2.10.5           | 210.5.0          |
 | 1.5.10           | 105.10.0         |
 
@@ -30,11 +30,12 @@ Internal and Semantic.
     - Visual Studio >= 2017
 *   Seed dotnet solution
     - ClrSeed.sln - solution file
+    - `build/build.ps1` - script for full solution build with modes: 'Dev', 'CI', 'PrePush'
     - Sample .Net Standard 2.0 project with one C# file that comply with all conventions
     - StyleCop Analyzers tool (through Directory.Build.props)
     - R# Team-Shared configuration
     - `build/clean-pkg-cache.ps1` - cleans all project.assets.json (sometimes it helps to resolve problems of dotnet restore)
-*   `pre-commit.ps1` - helps to prepare your contribution to comply with all repository rules
+*   `pre-push.ps1` - helps to prepare your contribution to comply with all repository rules
 *   `azure-pipelines.yaml` - CI build configurations (Windows and Linux)
 *   `build/environment-check.ps1` - verifies execution environment satisfies all requirements of scripts and tools from this repository
 *   `.editorconfig` root file
@@ -68,7 +69,7 @@ root
     - `.gitignore`
     - `.hgeol`
 *   Windows, Linux checkout support
-*   support for using this repository through TortoiseHG/mercurial/hg-git (see `docs/toolset/hg-git.md`)
+*   support for using this repository through TortoiseHG/mercurial/hg-git (see [`doc/toolset/hg-git.md`](doc/toolset/hg-git.md))
 
 
 ### Breaking Changes
