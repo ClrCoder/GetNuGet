@@ -20,7 +20,7 @@ strategy:
     linux-x64-debug:
       imageName: 'Ubuntu-16.04'
       mode: 'Debug'
-    windows-x64-deubg:
+    windows-x64-debug:
       imageName: 'vs2017-win2016'
       mode: 'Debug'
 
@@ -52,4 +52,3 @@ steps:
     dotnet msbuild -restore /t:rebuild /p:Configuration=$(mode) /p:Platform=x64 /warnaserror
   condition: ne( variables.mode, 'Rules')
   displayName: "Build solution"
-

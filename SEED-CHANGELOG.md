@@ -7,7 +7,7 @@ Due to big amount of breaking changes in each release, this project uses two ver
 Internal and Semantic.
  Semantic Version
 | Internal Version | Semantic Version |
-| ---------------- | ---------------- |
+|:----------------:|:----------------:|
 | 2.10.5           | 210.5.0          |
 | 1.5.10           | 105.10.0         |
 
