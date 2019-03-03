@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning][].
 
 Due to big amount of breaking changes in each release, this project uses two version schemas:
 Internal and Semantic.
- Semantic Version
+
+
 | Internal Version | Semantic Version |
 |:----------------:|:----------------:|
 | 2.10.5           | 210.5.0          |
