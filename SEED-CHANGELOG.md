@@ -6,7 +6,6 @@ This project adheres to [Semantic Versioning][].
 Due to big amount of breaking changes in each release, this project uses two version schemas:
 Internal and Semantic.
 
-
 | Internal Version | Semantic Version |
 |:----------------:|:----------------:|
 | 2.10.5           | 210.5.0          |
@@ -14,7 +13,11 @@ Internal and Semantic.
 
 
 ## [unreleased][]
+### Added
+### Breaking Changes
+### Fixed
 
+## [0.1.0][] - 03/03/2019
 ### Added
 *   Documentation files:
     - `docs/tools/hg-git.md` - describes TortoiseHG/mercurial experience to work with this repository
