@@ -34,7 +34,7 @@ Internal and Semantic.
     - StyleCop Analyzers tool (through Directory.Build.props)
     - R# Team-Shared configuration
     - `build/clean-pkg-cache.ps1` - cleans all project.assets.json (sometimes it helps to resolve problems of dotnet restore)
-*   `pre-commit.ps1` - helps to prepare your contribution to comply with all repository rules
+*   `pre-push.ps1` - helps to prepare your contribution to comply with all repository rules
 *   `azure-pipelines.yaml` - CI build configurations (Windows and Linux)
 *   `build/environment-check.ps1` - verifies execution environment satisfies all requirements of scripts and tools from this repository
 *   `.editorconfig` root file
@@ -68,7 +68,7 @@ root
     - `.gitignore`
     - `.hgeol`
 *   Windows, Linux checkout support
-*   support for using this repository through TortoiseHG/mercurial/hg-git (see `docs/toolset/hg-git.md`)
+*   support for using this repository through TortoiseHG/mercurial/hg-git (see [`doc/toolset/hg-git.md`](doc/toolset/hg-git.md))
 
 
 ### Breaking Changes

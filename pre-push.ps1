@@ -38,6 +38,23 @@ try{
     Write-Host
     Write-Host "Checking & applying 'eclint' rules" -ForegroundColor Green
     &"$rulesRoot/text/eclint.ps1" -Fix:$fixMode
+
+    Write-Host
+
+    # Writing finall status of this script
+    $changedFiles = &"$scriptsRoot/repo-search.ps1" ** -Status amd?
+    if ($changedFiles) {
+        Write-Host "------------------YOU ARE NOT READY TO PUSH----------------------" -ForegroundColor Yellow
+        $changedFiles | Out-Host
+        Write-Host "-----------------------------------------------------------------" -ForegroundColor Yellow
+        Write-Host "     You have uncommited changes in your working directory."       -ForegroundColor Yellow
+        Write-Host "-----------------------------------------------------------------" -ForegroundColor Yellow
+    }
+    else {
+        Write-Host "=================================================================" -ForegroundColor Green
+        Write-Host "            Congratulation! You are ready to PUSH!"                -ForegroundColor Green
+        Write-Host "=================================================================" -ForegroundColor Green
+    }
 }
 catch{
     throw
