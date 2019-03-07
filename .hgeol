@@ -1,9 +1,9 @@
 [patterns]
-** = native
-
 # These settings should corresponds to .gitattributes
 **.sh = LF
 **.DotSettings = LF
+
+** = native
 
 [repository]
 native = LF
