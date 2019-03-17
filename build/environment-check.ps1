@@ -32,6 +32,10 @@ function Write-SimpleReport {
 }
 try {
 
+    Write-Host "PowerShell environment check..." -ForegroundColor Green
+    Write-Host
+    &"$scriptsRoot/ps-environment.ps1" -Check
+
     # TODO: Add varnings
     $dependenciesReport = @()
     $nodeVersion = Invoke-Simple -Cmd "node" -CmdArgs "--version"

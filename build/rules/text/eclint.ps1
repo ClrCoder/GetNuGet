@@ -10,11 +10,11 @@ $scriptsRoot = "$repoRoot/scripts"
 # ---------------------------------------------------------------------
 
 try{
+    &"$scriptsRoot/ensure-deps.ps1"
+
     Push-Location $repoRoot/scripts
 
     try {
-        &"$scriptsRoot/fast-npm-update.ps1"
-
         if ($Fix){
             # Fix last line and trim spaces
             npm run eclint-fix
