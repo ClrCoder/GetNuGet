@@ -18,7 +18,7 @@ try {
     $scriptsRoot = "$repoRoot/scripts"
 
     # Refreshing scripts npm package
-    &"$scriptsRoot/fast-npm-update.ps1" -Path $scriptsRoot | Out-Host
+    &"$scriptsRoot/ensure-deps.ps1"
 
     $arguments = @(
         "node_modules/gulp/bin/gulp.js",

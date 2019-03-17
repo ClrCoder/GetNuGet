@@ -14,6 +14,11 @@ Internal and Semantic.
 
 ## [unreleased][]
 ### Added
+* Envoronment Checks:
+    - **PowerShell** >= 5.1
+    - **PowerShellGet** >= 1.6.0 (With fix script `script/ps-environment.ps1 -Fix`), fixes https://github.com/ClrCoder/ClrSeed/issues/38
+* `scripts/ensure-deps.ps1` script that checks and prepare all prerequisites for `scripts/*` (See https://github.com/ClrCoder/ClrSeed/issues/39).
+* `` 
 ### Breaking Changes
 ### Fixed
 

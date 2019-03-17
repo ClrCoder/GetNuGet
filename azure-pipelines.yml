@@ -35,13 +35,10 @@ steps:
   inputs:
     versionSpec: ">=10.0"
 - powershell: |
+    ./scripts/ps-environment.ps1 -Fix
     ./build/environment-check.ps1
-  displayName: "Build environment check"
-
-- script: |
-    cd scripts
-    npm install
-  displayName: "Installing node.js dependencies for scripts"
+    ./scripts/ensure-deps.ps1
+  displayName: "Build environment check and preparation"
 
 - powershell: |
     ./build/ci/rules-check.ps1
