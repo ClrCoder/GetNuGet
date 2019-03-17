@@ -40,6 +40,7 @@ Then receive new features through merging of commits from this repo.
 ### Automated "Repository Rules" checks/auto-fixers
 Use `pre-push.ps1` script to ensure that your working copy complies with the "Repository Rules".
 #### Execution environment requirements
+* **PowerShellGet** >= 1.6.0
 * **Node.JS** >= 8.0
 * **.Net Core** >= 2.1
 
