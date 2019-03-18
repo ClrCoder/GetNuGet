@@ -11,14 +11,21 @@ Internal and Semantic.
 | 2.10.5           | 210.5.0          |
 | 1.5.10           | 105.10.0         |
 
-
 ## [unreleased][]
 ### Added
+### Breaking Changes
+### Fixed
+
+## [0.1.1][] - 19/03/2019
+### Added
+* `scripts/ensure-deps.ps1` - automated scripts environment checker/fixed.
+* PSSolutions based scripts dependencies auto download.
+* VCS Checks:
+    - **no-relative-issues-refs** Github issues relative refs in commits are prohibited.
 * Envoronment Checks:
     - **PowerShell** >= 5.1
     - **PowerShellGet** >= 1.6.0 (With fix script `script/ps-environment.ps1 -Fix`), fixes https://github.com/ClrCoder/ClrSeed/issues/38
 * `scripts/ensure-deps.ps1` script that checks and prepare all prerequisites for `scripts/*` (See https://github.com/ClrCoder/ClrSeed/issues/39).
-* `` 
 ### Breaking Changes
 ### Fixed
 
