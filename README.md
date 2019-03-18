@@ -44,6 +44,8 @@ Use `pre-push.ps1` script to ensure that your working copy complies with the "Re
 * **Node.JS** >= 8.0
 * **.Net Core** >= 2.1
 
+#### VCS
+* **no-relative-issues-refs** - Github issues relative refs in commits are prohibited.
 #### Text
 * **eclint** - Checks basic `.editorconfig` rules:
     - Encoding
