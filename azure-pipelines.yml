@@ -44,8 +44,3 @@ steps:
     ./build/ci/rules-check.ps1
   condition: eq( variables.mode, 'Rules')
   displayName: "Checking repository rules"
-
-- script: |
-    dotnet msbuild -restore /t:rebuild /p:Configuration=$(mode) /p:Platform=x64 /warnaserror
-  condition: ne( variables.mode, 'Rules')
-  displayName: "Build solution"
