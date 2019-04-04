@@ -30,6 +30,9 @@ try{
         &"$repoRoot/build/clean-pkg-cache.ps1"
         dotnet msbuild -restore /t:rebuild /p:Configuration=$Configuration /p:Platform=$Platform /warnaserror
     }
+    if ($LASTEXITCODE) {
+        throw "Build failed."
+    }
 }
 catch{
     throw
